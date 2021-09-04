@@ -91,7 +91,7 @@
       console.log('clickableTrigger:', clickableTrigger);
 
       /* START: add event listener to clickable trigger on event click */
-      clickableTrigger.addEventListener('click', function(event) {
+      clickableTrigger.addEventListener('click', function (event) {
 
         /* prevent default action for event */
         event.preventDefault();
@@ -103,10 +103,10 @@
         for (let active of activeProduct) {
           if (active !== thisProduct.element) {
 
-          active.classList.remove(classNames.menuProduct.wrapperActive);
+            active.classList.remove(classNames.menuProduct.wrapperActive);
+          }
         }
-      }
-      console.log('activeProduct:', activeProduct);
+        console.log('activeProduct:', activeProduct);
 
         /* toggle active class on thisProduct.element */
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
