@@ -62,6 +62,8 @@
       thisProduct.renderInMenu();
       thisProduct.getElements();
       thisProduct.initAccordion();
+      thisProduct.initOrderForm();
+      thisProduct.processOrder();
 
       console.log('new Product:', thisProduct);
     }
@@ -85,23 +87,23 @@
     }
 
     getElements() {
-        const thisProduct = this;
-    
-        thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-        console.log('thisProduct.accordionTrigger:', thisProduct.accordionTrigger);
+      const thisProduct = this;
 
-        thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
-        console.log('thisProduct.form:', thisProduct.form);
+      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      console.log('thisProduct.accordionTrigger:', thisProduct.accordionTrigger);
 
-        thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
-        console.log('thisProduct.formInputs:', thisProduct.formInputs);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      console.log('thisProduct.form:', thisProduct.form);
 
-        thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
-        console.log('thisProduct.cartButton:', thisProduct.cartButton);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      console.log('thisProduct.formInputs:', thisProduct.formInputs);
 
-        thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
-        console.log('thisProduct.priceElem:', thisProduct.priceElem);
-      }
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      console.log('thisProduct.cartButton:', thisProduct.cartButton);
+
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      console.log('thisProduct.priceElem:', thisProduct.priceElem);
+    }
 
     initAccordion() {
       const thisProduct = this;
@@ -132,8 +134,16 @@
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
 
       });
+    }
 
+    initOrderForm() {
+      const thisProduct = this;
+      console.log('initOrderForm:', initOrderForm);
+    }
 
+    processOrder () {
+      const thisProduct = this;
+      console.log('processOrder:', processOrder);
     }
   }
 
