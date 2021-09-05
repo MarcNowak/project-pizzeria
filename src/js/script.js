@@ -138,12 +138,12 @@
 
     initOrderForm() {
       const thisProduct = this;
-      console.log('initOrderForm:', initOrderForm);
+      console.log('initOrderForm:');
     }
 
     processOrder () {
       const thisProduct = this;
-      console.log('processOrder:', processOrder);
+      console.log('processOrder:');
     }
   }
 
