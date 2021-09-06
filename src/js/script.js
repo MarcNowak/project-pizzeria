@@ -63,9 +63,10 @@
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
+      thisProduct.initAmountWidget();
       thisProduct.processOrder();
 
-      console.log('new Product:', thisProduct);
+      // // console.log('new Product:', thisProduct);
     }
 
     renderInMenu() {
@@ -73,7 +74,7 @@
 
       /* [DONE] generate HTML based on template */
       const generatedHTML = templates.menuProduct(thisProduct.data);
-      // console.log(generatedHTML);
+      // // console.log(generatedHTML);
 
       /* create element using utils.createElementFromHTML */
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
@@ -90,23 +91,25 @@
       const thisProduct = this;
 
       thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-      console.log('thisProduct.accordionTrigger:', thisProduct.accordionTrigger);
+      // console.log('thisProduct.accordionTrigger:', thisProduct.accordionTrigger);
 
       thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
-      console.log('thisProduct.form:', thisProduct.form);
+      // console.log('thisProduct.form:', thisProduct.form);
 
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
-      console.log('thisProduct.formInputs:', thisProduct.formInputs);
+      // console.log('thisProduct.formInputs:', thisProduct.formInputs);
 
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
-      console.log('thisProduct.cartButton:', thisProduct.cartButton);
+      // console.log('thisProduct.cartButton:', thisProduct.cartButton);
 
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
-      console.log('thisProduct.priceElem:', thisProduct.priceElem);
+      // console.log('thisProduct.priceElem:', thisProduct.priceElem);
 
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-      console.log('select.menuProduct.imageWrapper:', select.menuProduct.imageWrapper);
-    }
+      // console.log('select.menuProduct.imageWrapper:', select.menuProduct.imageWrapper);
+
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
+      console.log('select.menuProduct.amountWidget:', select.menuProduct.amountWidget);
 
     initAccordion() {
       const thisProduct = this;
@@ -131,7 +134,7 @@
             active.classList.remove(classNames.menuProduct.wrapperActive);
           }
         }
-        console.log('activeProduct:', activeProduct);
+        // console.log('activeProduct:', activeProduct);
 
         /* toggle active class on thisProduct.element */
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
@@ -141,7 +144,7 @@
 
     initOrderForm() {
       const thisProduct = this;
-      console.log('initOrderForm:');
+      // console.log('initOrderForm:');
 
       thisProduct.form.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -162,11 +165,11 @@
 
     processOrder() {
       const thisProduct = this;
-      console.log('processOrder:');
+      // console.log('processOrder:');
 
       // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData', formData);
+      // console.log('formData', formData);
 
       // set price to default price
       let price = thisProduct.data.price;
@@ -176,14 +179,14 @@
 
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
-        console.log(paramId, param);
+        // console.log(paramId, param);
 
         // for every option in this category
         for (let optionId in param.options) {
 
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          console.log(optionId, option);
+          // console.log(optionId, option);
 
           // check if there is param with a name of paramId in formData and if it includes optionId
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
@@ -206,7 +209,7 @@
               price -= option.price;
           }
           const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
-          console.log('optionImage:', optionImage);
+          // console.log('optionImage:', optionImage);
 
           if (optionImage) {
             if (optionSelected) {
@@ -221,12 +224,27 @@
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
     }
+
+    initAmountWidget() {
+      const thisProduct = this;
+
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+    }
+  }
+
+  class AmountWidget {
+    constructor(element) {
+      const whisWidget =this;
+
+      console.log('AmountWidget:', thisWidget);
+      console.log('constructor arguments:', element)
+    }
   }
 
   const app = {
     initMenu: function () {
       const thisApp = this;
-      console.log('thisApp:', thisApp.data);
+      // console.log('thisApp:', thisApp.data);
 
       for (let productData in thisApp.data.products) {
         new Product(productData, thisApp.data.products[productData]);
@@ -241,11 +259,11 @@
 
     init: function () {
       const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
+      // console.log('*** App starting ***');
+      // console.log('thisApp:', thisApp);
+      // console.log('classNames:', classNames);
+      // console.log('settings:', settings);
+      // console.log('templates:', templates);
 
       thisApp.initData();
       thisApp.initMenu();
