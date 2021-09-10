@@ -66,7 +66,7 @@
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
 
-      // // console.log('new Product:', thisProduct);
+      // console.log('new Product:', thisProduct);
     }
 
     renderInMenu() {
@@ -74,7 +74,7 @@
 
       /* [DONE] generate HTML based on template */
       const generatedHTML = templates.menuProduct(thisProduct.data);
-      // // console.log(generatedHTML);
+      // console.log(generatedHTML);
 
       /* create element using utils.createElementFromHTML */
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
@@ -110,6 +110,8 @@
 
       thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
       console.log('select.menuProduct.amountWidget:', select.menuProduct.amountWidget);
+
+    }
 
     initAccordion() {
       const thisProduct = this;
@@ -190,7 +192,7 @@
 
           // check if there is param with a name of paramId in formData and if it includes optionId
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
-          
+
           //if(formData[paramId] && formData[paramId].includes(optionId)) {
           if (optionSelected) {
 
@@ -234,13 +236,40 @@
 
   class AmountWidget {
     constructor(element) {
-      const whisWidget =this;
+      const thisWidget = this;
+
+      thisWidget.setValue(thisWidget.input.value);
+      thisWidget.getElements(element);
 
       console.log('AmountWidget:', thisWidget);
-      console.log('constructor arguments:', element)
+      console.log('constructor arguments:', element);
+    }
+
+
+    getElements(element) {
+      const thisWidget = this;
+
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+
+    setValue(value) {
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+
+      /* TODO: Add validation */
+      if (thisWidget.value !== newValue && !isNaN(newValue)) {
+        thisWidget.value = newValue;
+      }
+
+      thisWidget.value = newValue;
+      thisWidget.input.value = thisWidget.value;
+
     }
   }
-
   const app = {
     initMenu: function () {
       const thisApp = this;
