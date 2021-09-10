@@ -40,11 +40,11 @@
     },
   };
 
-  const settings = {
+  const settings = { // eslint-disable-line no-unused-vars
     amountWidget: {
       defaultValue: 1,
-      defaultMin: 1,
-      defaultMax: 9,
+      defaultMin: 0,
+      defaultMax: 10,
     }
   };
 
@@ -63,7 +63,7 @@
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
-      thisProduct.initAmountWidget();
+      // thisProduct.initAmountWidget();
       thisProduct.processOrder();
 
       // console.log('new Product:', thisProduct);
@@ -222,6 +222,8 @@
           }
         }
       }
+      /* multiply price by amount */
+      price *= thisProduct.amountWidget.value;
 
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
@@ -231,6 +233,9 @@
       const thisProduct = this;
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+      thisProduct.amountWidgetElem.addEventListener('updated', function () {
+        thisProduct.processOrder();
+      });
     }
   }
 
@@ -238,8 +243,9 @@
     constructor(element) {
       const thisWidget = this;
 
-      thisWidget.setValue(thisWidget.input.value);
       thisWidget.getElements(element);
+      thisWidget.setValue(thisWidget.input.value);
+
 
       console.log('AmountWidget:', thisWidget);
       console.log('constructor arguments:', element);
@@ -253,6 +259,7 @@
       thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+      thisWidget.value = settings.amountWidget.defaultValue;
     }
 
     setValue(value) {
@@ -261,13 +268,35 @@
       const newValue = parseInt(value);
 
       /* TODO: Add validation */
-      if (thisWidget.value !== newValue && !isNaN(newValue)) {
+      if (newValue !== thisWidget.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
+
         thisWidget.value = newValue;
       }
 
-      thisWidget.value = newValue;
+      thisWidget.announce();
       thisWidget.input.value = thisWidget.value;
+    }
+    initActions() {
+      const thisWidget = this;
 
+      thisWidget.input.addEventListener('change', function () {
+        thisWidget.setValue(thisWidget.input);
+      });
+      thisWidget.linkDecrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value - 1);
+      });
+      thisWidget.linkIncrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value + 1);
+      });
+    }
+
+    announce() {
+      const thisWidget = this;
+
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
     }
   }
   const app = {
