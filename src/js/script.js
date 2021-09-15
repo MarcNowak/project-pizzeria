@@ -434,7 +434,7 @@
       thisCart.dom.productList.addEventListener('updated', function () {
         thisCart.update();
       });
-      
+
     }
 
     add(menuProduct) {
@@ -457,6 +457,18 @@
       thisCart.update();
     }
 
+    remove(removedProduct) {
+      const thisCart = this;
+
+      const indexOfRemovedProduct = thisCart.products.indexOf(removedProduct);
+
+      removedProduct.dom.wrapper.remove();
+
+      thisCart.products.splice(indexOfRemovedProduct, 1);
+
+      thisCart.update();
+    }
+
     update() {
       const thisCart = this;
 
@@ -468,9 +480,7 @@
         totalNumber += product.amount;
         subtotalPrice += product.price;
       }
-
-      /* shorthand if
-      condition ? doThisIfTrue : doThisIfFalse*/
+      
       totalNumber == 0 ? deliveryFee = 0 : deliveryFee = settings.cart.defaultDeliveryFee;
 
       thisCart.totalPrice = subtotalPrice + deliveryFee;
@@ -485,7 +495,7 @@
     }
   }
 
-  
+
 
   class CartProduct {
     constructor(menuProduct, element) {
@@ -500,8 +510,8 @@
       thisCartProduct.params = menuProduct.params;
 
       thisCartProduct.getElements(element);
-      // thisCartProduct.initAmountWidget();
-      // thisCartProduct.initActions();
+      thisCartProduct.initAmountWidget();
+      thisCartProduct.initActions();
     }
 
     getElements(element) {
@@ -526,6 +536,32 @@
 
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
       });
+    }
+
+    initActions() {
+      const thisCartProduct = this;
+
+      thisCartProduct.dom.edit.addEventListener('click', function (event) {
+        event.preventDefault;
+      });
+
+      thisCartProduct.dom.remove.addEventListener('click', function (event) {
+        event.preventDefault;
+        thisCartProduct.remove();
+      });
+    }
+
+    remove() {
+      const thisCartProduct = this;
+
+      const event = new CustomEvent('remove', {
+        bubbles: true,
+        detail: {
+          cartProduct: thisCartProduct,
+        }
+      });
+
+      thisCartProduct.dom.wrapper.dispatchEvent(event);
     }
 
   }
