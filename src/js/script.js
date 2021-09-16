@@ -77,6 +77,14 @@
       defaultDeliveryFee: 20,
     },
     // CODE ADDED END
+
+    // PARAMETERS NECESSARY FOR API CONNECTION - START
+    db: {
+      url: '//localhost:3131',
+      products: 'products',
+      orders: 'orders',
+    },
+    // PARAMETERS NECESSARY FOR API CONNECTION - END
   };
 
   const templates = {
@@ -143,7 +151,7 @@
       // console.log('select.menuProduct.imageWrapper:', select.menuProduct.imageWrapper);
 
       thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
-      console.log('select.menuProduct.amountWidget:', select.menuProduct.amountWidget);
+      // console.log('select.menuProduct.amountWidget:', select.menuProduct.amountWidget);
 
     }
 
@@ -308,7 +316,7 @@
 
       /* for every category in sourceData */
       for (let paramId in thisProduct.data.params) {
-        console.log('param key: ', paramId);
+        // console.log('param key: ', paramId);
         const param = thisProduct.data.params[paramId];
 
         /* initialize label and options */
@@ -342,8 +350,8 @@
       thisWidget.initActions();
 
 
-      console.log('AmountWidget:', thisWidget);
-      console.log('constructor arguments:', element);
+      // console.log('AmountWidget:', thisWidget);
+      // console.log('constructor arguments:', element);
     }
 
 
@@ -408,7 +416,7 @@
 
       thisCart.initActions();
 
-      console.log('new Cart', thisCart);
+      // console.log('new Cart', thisCart);
     }
     getElements(element) {
       const thisCart = this;
@@ -434,7 +442,7 @@
       thisCart.dom.productList.addEventListener('updated', function () {
         thisCart.update();
       });
-      
+
       thisCart.dom.productList.addEventListener('remove', function (event) {
         thisCart.remove(event.detail.cartProduct);
       });
@@ -483,7 +491,7 @@
         totalNumber += product.amount;
         subtotalPrice += product.price;
       }
-      
+
       totalNumber == 0 ? deliveryFee = 0 : deliveryFee = settings.cart.defaultDeliveryFee;
 
       thisCart.totalPrice = subtotalPrice + deliveryFee;
@@ -574,14 +582,32 @@
       // console.log('thisApp:', thisApp.data);
 
       for (let productData in thisApp.data.products) {
-        new Product(productData, thisApp.data.products[productData]);
+        new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
       }
     },
 
     initData: function () {
       const thisApp = this;
 
-      thisApp.data = dataSource;
+      thisApp.data = {};
+
+      const url = settings.db.url + '/' + settings.db.products;
+
+      fetch(url)
+        .then(function (rawResponse) {
+          return rawResponse.json();
+        })
+        .then(function (parsedResponse) {
+          console.log('parsedResponse', parsedResponse);
+
+          // save parsedResponse as thisApp.data.products
+          thisApp.data.products = parsedResponse;
+
+          // execute initMenu method
+          thisApp.initMenu();
+        });
+
+      console.log('thisApp.data', JSON.stringify(thisApp.data));
     },
 
     initCart: function () {
@@ -601,7 +627,7 @@
       // console.log('templates:', templates);
 
       thisApp.initData();
-      thisApp.initMenu();
+      // thisApp.initMenu();
       thisApp.initCart();
     },
   };
