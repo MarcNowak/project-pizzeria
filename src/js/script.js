@@ -429,7 +429,7 @@
       thisCart.dom.deliveryFee = element.querySelector(select.cart.deliveryFee);
       thisCart.dom.totalNumber = element.querySelector(select.cart.totalNumber);
       thisCart.dom.subtotalPrice = element.querySelector(select.cart.subtotalPrice);
-      tthisCart.dom.totalPrice = element.querySelectorAll(select.cart.totalPrice);
+      thisCart.dom.totalPrice = element.querySelectorAll(select.cart.totalPrice);
       thisCart.dom.form = element.querySelector(select.cart.form);
       thisCart.dom.address = thisCart.dom.form.querySelector(select.cart.address);
       thisCart.dom.phone = thisCart.dom.form.querySelector(select.cart.phone);
@@ -453,7 +453,7 @@
       thisCart.dom.form.addEventListener('submit', function (event) {
         event.preventDefault();
         thisCart.sendOrder();
-      })
+      });
     }
 
     add(menuProduct) {
