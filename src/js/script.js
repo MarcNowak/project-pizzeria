@@ -5,7 +5,7 @@
 
   const select = {
     templateOf: {
-      menuProduct: '#template-menu-product', /* selektor szablonu produktu */
+      menuProduct: '#template-menu-product', // selektor szablonu produktu
       cartProduct: '#template-cart-product', // CODE ADDED
     },
     containerOf: {
