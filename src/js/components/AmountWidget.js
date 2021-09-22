@@ -28,12 +28,10 @@ class AmountWidget {
 
     const newValue = parseInt(value);
 
-    thisWidget.announce();
-
-    /* TODO: Add validation */
     if (newValue !== thisWidget.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
 
       thisWidget.value = newValue;
+      thisWidget.announce();
     }
    
     thisWidget.input.value = thisWidget.value;
@@ -43,7 +41,7 @@ class AmountWidget {
     const thisWidget = this;
 
     thisWidget.input.addEventListener('change', function () {
-      thisWidget.setValue(thisWidget.input);
+      thisWidget.setValue(thisWidget.input.value);
     });
     thisWidget.linkDecrease.addEventListener('click', function (event) {
       event.preventDefault();
