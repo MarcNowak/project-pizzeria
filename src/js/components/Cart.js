@@ -49,7 +49,7 @@ class Cart {
 
     thisCart.dom.form.addEventListener('submit', function (event) {
       event.preventDefault();
-      thisCart.sendOrder();
+      thisCart.prepareOrder();
     });
   }
 
@@ -88,29 +88,18 @@ class Cart {
   update() {
     const thisCart = this;
 
-    // let deliveryFee;
-    // let totalNumber = 0;
-    // let subtotalPrice = 0;
     thisCart.totalNumber = 0;
     thisCart.subtotalPrice = 0;
 
     for (const product of thisCart.products) {
-      // totalNumber += product.amount;
-      // subtotalPrice += product.price;
       thisCart.totalNumber += product.amount;
       thisCart.subtotalPrice += product.price;
     }
 
-    // totalNumber == 0 ? deliveryFee = 0 : deliveryFee = settings.cart.defaultDeliveryFee;
     thisCart.totalNumber == 0 ? thisCart.deliveryFee = 0 : thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
 
-    // thisCart.totalPrice = subtotalPrice + deliveryFee;
     thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
 
-
-    // thisCart.dom.totalNumber.innerHTML = totalNumber;
-    // thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
-    // thisCart.dom.deliveryFee.innerHTML = deliveryFee;
     thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
     thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
     thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
@@ -120,7 +109,7 @@ class Cart {
     }
   }
 
-  sendOrder() {
+  prepareOrder() {
     const thisCart = this;
     const url = settings.db.url + '/' + settings.db.orders;
 
@@ -136,6 +125,10 @@ class Cart {
       payload.products.push(prod.getData());
     }
 
+    thisCart.send(url, payload);
+  }
+
+  send (url, payload) {
     const options = {
       method: 'POST',
       headers: {
