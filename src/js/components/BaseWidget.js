@@ -5,7 +5,7 @@ class BaseWidget {
     thisWidget.dom = {};
     thisWidget.dom.wrapper = wrapperElement;
 
-    thisWidget.correctValue = initialValue; // zakładamy że wartość correctValue pobierana z settings jest poprawna
+    thisWidget.correctValue = initialValue;
   }
 
   get value () {
@@ -44,6 +44,11 @@ class BaseWidget {
       bubbles: true,
     });
     thisWidget.dom.wrapper.dispatchEvent(event);
+  }
+
+  setValue(value){
+    const thisWidget = this;
+    thisWidget.value = value;
   }
 }
 
