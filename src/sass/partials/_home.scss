@@ -114,6 +114,7 @@
 
   }
 }
+
 .carousel-cell {
   width: 100%; /* full width */
   height: 340px; /* height of carousel */
@@ -165,10 +166,11 @@
   }
 
   &:hover {
-  opacity: 0.7;
+    opacity: 0.7;
 
     .fas {
       opacity: 0.7;
+
       &:hover {
         opacity: 1;
       }
