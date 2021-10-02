@@ -41,6 +41,7 @@
   h2 {
     font-size: 26px;
     color: $color-light;
+    text-align: center;
   }
 
   p {
@@ -52,7 +53,7 @@
 
   &:hover {
     margin-top: -20px;
-    transition-duration: 1s;
+    transition: 1s ease;
 
     p {
       opacity: 1;
@@ -133,6 +134,7 @@
     position: absolute;
     font-size: 30px;
     opacity: 0;
+    margin: 66px;
 
     a{
       text-decoration: none;
@@ -155,11 +157,13 @@
     width: 193px;
     height: 193px;
     object-fit: cover;
+    margin: 5px;
   }
 }
 
 .hovver{
   justify-content: center;
+  display: block;
 
   .fas {
     opacity: 0;
@@ -167,12 +171,14 @@
 
   &:hover {
     opacity: 0.7;
+    filter: brightness(70%);
+    transition: $transition;
 
     .fas {
       opacity: 0.7;
 
       &:hover {
-        opacity: 1;
+        opacity: 1.5;
       }
     }
   }
