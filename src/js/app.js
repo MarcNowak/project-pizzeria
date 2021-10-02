@@ -85,7 +85,6 @@ const app = {
         // save parsedResponse as thisApp.data.products
         thisApp.data.products = parsedResponse;
 
-        // execute initMenu method
         thisApp.initMenu();
       });
   },
