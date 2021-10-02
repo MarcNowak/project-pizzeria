@@ -3,7 +3,7 @@ import { utils } from '../utils.js';
 import AmountWidget from './AmountWidget.js';
 import DatePicker from './DatePicker.js';
 import HourPicker from './HourPicker.js';
-import Cart from './Cart.js';
+// import Cart from './Cart.js';
 
 class Booking {
   constructor(element) {
@@ -38,19 +38,19 @@ class Booking {
       booking:
         settings.db.url +
         '/' +
-        settings.db.booking +
+        settings.db.bookings +
         '?' +
         params.booking.join('&'),
       eventsCurrent:
         settings.db.url +
         '/' +
-        settings.db.event +
+        settings.db.events +
         '?' +
         params.eventsCurrent.join('&'),
       eventsRepeat:
         settings.db.url +
         '/' +
-        settings.db.event +
+        settings.db.events +
         '?' +
         params.eventsRepeat.join('&'),
     };
@@ -261,18 +261,18 @@ class Booking {
     for (const table of thisBooking.dom.tables) {
       table.classList.remove(classNames.booking.tableSelected);
     }
-    thisBooking.tableSelected = [];
+    thisBooking.tableSelected = null;
   }
 
   prepareBooking() {
     const thisBooking = this;
-    const url = settings.db.url + '/' + settings.db.booking;
+    const url = settings.db.url + '/' + settings.db.bookings;
 
-    if (thisBooking.tableSelected != null) {
-      if (thisBooking.tableSelected.length == 0) {
-        thisBooking.tableSelected = null;
-      }
-    }
+    // if (thisBooking.tableSelected != null) {
+    //   if (thisBooking.tableSelected.length == 0) {
+    //     thisBooking.tableSelected = null;
+    //   }
+    // }
 
     let payload = {};
     payload.date = thisBooking.datePicker.value;
